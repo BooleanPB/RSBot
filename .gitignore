@@ -17,3 +17,4 @@
 /scripts/*.class
 /temp.txt
 /*.iml
+*.sw[a-z]
