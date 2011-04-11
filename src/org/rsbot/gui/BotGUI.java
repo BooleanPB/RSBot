@@ -67,8 +67,8 @@ public class BotGUI extends JFrame implements ActionListener, ScriptListener {
 				}
 
 				if (GlobalConfiguration.RUNNING_FROM_JAR) {
-					UpdateUtil updater = new UpdateUtil(BotGUI.this);
-					updater.checkUpdate(false);
+//					UpdateUtil updater = new UpdateUtil(BotGUI.this);
+//					updater.checkUpdate(false);
 				}
 			}
 		});
@@ -77,11 +77,11 @@ public class BotGUI extends JFrame implements ActionListener, ScriptListener {
 	@Override
 	public void setTitle(String title) {
 		if (title != null) {
-			super.setTitle(title + " - " + GlobalConfiguration.NAME + " v"
-					               + ((float) GlobalConfiguration.getVersion() / 100));
+			super.setTitle(title + " - " + GlobalConfiguration.NAME + " v" + 
+					GlobalConfiguration.getVersion());
 		} else {
-			super.setTitle(GlobalConfiguration.NAME + " v"
-					               + ((float) GlobalConfiguration.getVersion() / 100));
+			super.setTitle(GlobalConfiguration.NAME + " v" +
+					GlobalConfiguration.getVersion());
 		}
 	}
 

@@ -23,22 +23,27 @@ public class UpdateUtil {
 		if (verbose) {
 			UpdateUtil.log.info("Checking for update...");
 		}
-		if (getLatestVersion() > GlobalConfiguration.getVersion()) {
-			UpdateUtil.log.info("New version available!");
-			final int update = JOptionPane.showConfirmDialog(parent,
-			                                                 "A newer version is available. Do you wish to update?",
-			                                                 "Update Found", JOptionPane.YES_NO_OPTION);
-			if (update != 0) {
-				UpdateUtil.log.info("Cancelled update");
-			}
-			if (update == 0) {
-				updateBot();
-			}
-		} else {
-			if (verbose) {
-				UpdateUtil.log.info("You have the latest version");
-			}
-		}
+		/*
+		 * FIXME: Figure out a way to enable this with the x.y.z versioning
+		 * system. I don't have access to the powerbot.org server so I'm unable
+		 * to do so.
+		 */
+//		if (getLatestVersion() > GlobalConfiguration.getVersion()) {
+//			UpdateUtil.log.info("New version available!");
+//			final int update = JOptionPane.showConfirmDialog(parent,
+//			                                                 "A newer version is available. Do you wish to update?",
+//			                                                 "Update Found", JOptionPane.YES_NO_OPTION);
+//			if (update != 0) {
+//				UpdateUtil.log.info("Cancelled update");
+//			}
+//			if (update == 0) {
+//				updateBot();
+//			}
+//		} else {
+//			if (verbose) {
+//				UpdateUtil.log.info("You have the latest version");
+//			}
+//		}
 	}
 
 	@SuppressWarnings("finally")
