@@ -1,0 +1,6 @@
+#!/bin/bash
+
+dir_powerbot=`dirname "$0"`
+
+cd $dir_powerbot
+java -classpath bin org.rsbot.Application $*

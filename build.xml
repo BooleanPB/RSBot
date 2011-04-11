@@ -1,0 +1,50 @@
+<project name="RSBot" default="all" >
+	<property file="configs/build.properties" />
+	<property name="dist.absname" value="${dist.name}-${dist.version}.jar" />
+
+	<target name="init">
+		<tstamp/>
+		<mkdir dir="${dir.build}"/>
+	</target>
+
+	<target name="bot" depends="init">
+		<javac
+			srcdir="${dir.src}"
+			debug="true"
+			destdir="${dir.build}"
+			deprecation="on"
+			includeAntRuntime="false"
+		/>
+	</target>
+
+	<target name="scripts" depends="bot">
+		<javac
+			srcdir="${dir.scripts}"
+			debug="true"
+			classpath="${dir.build}"
+			includeAntRuntime="false"
+		/>
+	</target>
+
+	<target name="all" depends="bot,scripts">
+	</target>
+
+	<target name="dist" depends="bot,scripts">
+		<jar
+				jarfile="${dist.absname}"
+				basedir="${dir.build}"
+				includes="**/*.class"
+				manifest="configs/Manifest"
+		>
+		<fileset dir="." includes="configs/build.properties,resources/,scripts/*.class"/>
+		</jar>
+	</target>
+
+	<target name="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="." includes="RSBot-*"/>
+			<fileset dir="${dir.build}" includes="**/*.class"/>
+			<fileset dir="${dir.scripts}" includes="**.class"/>
+		</delete>
+	</target>
+</project>

@@ -16,3 +16,4 @@
 /lib/*.jar
 /scripts/*.class
 /temp.txt
+*.sw[a-z]

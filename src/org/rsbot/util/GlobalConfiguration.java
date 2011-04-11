@@ -73,6 +73,15 @@ public class GlobalConfiguration {
 					+ "/version.dat";
 		}
 
+		public static class Configs {
+			public static final String ROOT	= "configs";
+
+			public static final String BUILD_PROPERTIES	=
+				ROOT + File.separator + "build.properties";
+			public static final String MANIFEST			=
+				ROOT + File.separator + "Manifest";
+		}
+
 		public static class URLs {
 			public static final String UPDATER = "http://links.powerbot.org/";
 			public static final String DOWNLOAD = UPDATER + "update";
@@ -394,22 +403,47 @@ public class GlobalConfiguration {
 		return con;
 	}
 
-	public static int getVersion() {
+	public static String getVersion()
+	{
 		try {
-			InputStream is = RUNNING_FROM_JAR ? GlobalConfiguration.class
-					.getClassLoader().getResourceAsStream(
-							Paths.Resources.VERSION) : new FileInputStream(
-					Paths.VERSION);
+			String build_properties = Paths.Configs.BUILD_PROPERTIES;
+			InputStream is = RUNNING_FROM_JAR ?
+				GlobalConfiguration.class.getClassLoader().getResourceAsStream(build_properties) :
+				new FileInputStream(build_properties);
 
-			int off = 0;
-			byte[] b = new byte[2];
-			while ((off += is.read(b, off, 2 - off)) != 2) {
+			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+			String line;
+			while ((line = br.readLine()) != null) {
+				if (line.startsWith("dist.version")) {
+					line = line.replaceAll("^dist[.]version[ \t]+", "");
+					return line;
+				}
 			}
-
-			return ((0xFF & b[0]) << 8) + (0xFF & b[1]);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
-		return -1;
+
+		return null;
 	}
+
+//	public static int getVersion() {
+//		try {
+//			InputStream is = RUNNING_FROM_JAR ? GlobalConfiguration.class
+//					.getClassLoader().getResourceAsStream(
+//							Paths.Resources.VERSION) : new FileInputStream(
+//					Paths.VERSION);
+//
+//			int off = 0;
+//			byte[] b = new byte[2];
+//			while ((off += is.read(b, off, 2 - off)) != 2) {
+//			}
+//
+//			return ((0xFF & b[0]) << 8) + (0xFF & b[1]);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return -1;
+//	}
 }
