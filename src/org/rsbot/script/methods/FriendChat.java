@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 /**
  * Friend chat related operations.
- *
+ * 
  * @author Debauchery
  */
 public class FriendChat extends MethodProvider {
@@ -16,7 +16,8 @@ public class FriendChat extends MethodProvider {
 		super(ctx);
 	}
 
-	private static final Pattern HTML_TAG = Pattern.compile("(^[^<]+>|<[^>]+>|<[^>]+$)");
+	private static final Pattern HTML_TAG = Pattern
+			.compile("(^[^<]+>|<[^>]+>|<[^>]+$)");
 	public static final int INTERFACE_FRIEND_CHAT = 1109;
 	public static final int INTERFACE_FRIEND_CHAT_CHECK = 16;
 	public static final int INTERFACE_FRIEND_CHAT_JOIN_BUTTON = 30;
@@ -24,13 +25,15 @@ public class FriendChat extends MethodProvider {
 	public static final int INTERFACE_FRIEND_CHAT_USERS_LIST = 5;
 	public static final int INTERFACE_JOIN_FRIEND_CHAT = 752;
 	public static final int INTERFACE_JOIN_FRIEND_CHAT_LAST_CHANNEL = 3;
+	public static final int INTERFACE_TOOGLE_LOOTSHARE = 18;
 	private String lastCachedChannel = null;
 
 	/**
-	 * Joins the given channel.
-	 * If we are already in a channel, it will leave it.
-	 *
-	 * @param channel The channel to join
+	 * Joins the given channel. If we are already in a channel, it will leave
+	 * it.
+	 * 
+	 * @param channel
+	 *            The channel to join
 	 * @return <tt>true</tt> if successful; otherwise <tt>false</tt>
 	 */
 	public boolean join(String channel) {
@@ -40,12 +43,15 @@ public class FriendChat extends MethodProvider {
 				return false;
 			}
 		}
-		methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT, INTERFACE_FRIEND_CHAT_JOIN_BUTTON).doClick();
+		methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT,
+				INTERFACE_FRIEND_CHAT_JOIN_BUTTON).doClick();
 		sleep(random(500, 800));
 		if (methods.interfaces.get(INTERFACE_JOIN_FRIEND_CHAT).isValid()) {
-			String lastChatCompText = methods.interfaces.getComponent(INTERFACE_JOIN_FRIEND_CHAT,
-			                                                          INTERFACE_JOIN_FRIEND_CHAT_LAST_CHANNEL).getText();
-			lastCachedChannel = lastChatCompText.substring(lastChatCompText.indexOf(": ") + 2);
+			String lastChatCompText = methods.interfaces.getComponent(
+					INTERFACE_JOIN_FRIEND_CHAT,
+					INTERFACE_JOIN_FRIEND_CHAT_LAST_CHANNEL).getText();
+			lastCachedChannel = lastChatCompText.substring(lastChatCompText
+					.indexOf(": ") + 2);
 			methods.keyboard.sendText(channel, true);
 			sleep(random(1550, 1800));
 			if (isInChannel()) {
@@ -55,12 +61,12 @@ public class FriendChat extends MethodProvider {
 		return false;
 	}
 
-
 	/**
-	 * Joins the given channel.
-	 * If we are already in a channel, it will leave it.
-	 *
-	 * @param channel The channel to join
+	 * Joins the given channel. If we are already in a channel, it will leave
+	 * it.
+	 * 
+	 * @param channel
+	 *            The channel to join
 	 * @return <tt>true</tt> if successful; otherwise <tt>false</tt>
 	 */
 	public boolean joinLastChannel() {
@@ -70,14 +76,17 @@ public class FriendChat extends MethodProvider {
 				return false;
 			}
 		}
-		methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT, INTERFACE_FRIEND_CHAT_JOIN_BUTTON).doClick();
+		methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT,
+				INTERFACE_FRIEND_CHAT_JOIN_BUTTON).doClick();
 		sleep(random(500, 800));
 		if (methods.interfaces.get(INTERFACE_JOIN_FRIEND_CHAT).isValid()) {
-			String lastChatCompText = methods.interfaces.getComponent(INTERFACE_JOIN_FRIEND_CHAT,
-			                                                          INTERFACE_JOIN_FRIEND_CHAT_LAST_CHANNEL).getText();
-			lastCachedChannel = lastChatCompText.substring(lastChatCompText.indexOf(": ") + 2);
+			String lastChatCompText = methods.interfaces.getComponent(
+					INTERFACE_JOIN_FRIEND_CHAT,
+					INTERFACE_JOIN_FRIEND_CHAT_LAST_CHANNEL).getText();
+			lastCachedChannel = lastChatCompText.substring(lastChatCompText
+					.indexOf(": ") + 2);
 			methods.interfaces.getComponent(INTERFACE_JOIN_FRIEND_CHAT,
-			                                INTERFACE_JOIN_FRIEND_CHAT_LAST_CHANNEL).doClick();
+					INTERFACE_JOIN_FRIEND_CHAT_LAST_CHANNEL).doClick();
 			sleep(random(1550, 1800));
 			if (isInChannel()) {
 				return true;
@@ -88,15 +97,15 @@ public class FriendChat extends MethodProvider {
 
 	/**
 	 * Leaves the current channel.
-	 *
+	 * 
 	 * @return <tt>true</tt> if successful; otherwise <tt>false</tt>
 	 */
 	public boolean leave() {
 		methods.game.openTab(Game.TAB_FRIENDS_CHAT);
 		if (isInChannel()) {
 			lastCachedChannel = getChannelOwner();
-			methods.interfaces.getComponent(
-					INTERFACE_FRIEND_CHAT, INTERFACE_FRIEND_CHAT_JOIN_BUTTON).doClick();
+			methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT,
+					INTERFACE_FRIEND_CHAT_JOIN_BUTTON).doClick();
 			sleep(random(650, 900));
 			return isInChannel();
 		}
@@ -105,7 +114,7 @@ public class FriendChat extends MethodProvider {
 
 	/**
 	 * Returns whether or not we're in a channel.
-	 *
+	 * 
 	 * @return <tt>true</tt> if in a channel; otherwise <tt>false</tt>
 	 */
 	public boolean isInChannel() {
@@ -113,13 +122,13 @@ public class FriendChat extends MethodProvider {
 		if (getChannelName() != null) {
 			lastCachedChannel = getChannelName();
 		}
-		return methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT, INTERFACE_FRIEND_CHAT_JOIN_BUTTON).containsAction(
-				"Leave chat");
+		return methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT,
+				INTERFACE_FRIEND_CHAT_JOIN_BUTTON).containsAction("Leave chat");
 	}
 
 	/**
 	 * Gets the users in the channel.
-	 *
+	 * 
 	 * @return The users in the channel or null if unavailable
 	 */
 	public String[] getChannelUsers() {
@@ -132,9 +141,12 @@ public class FriendChat extends MethodProvider {
 			if (getChannelName() != null) {
 				lastCachedChannel = getChannelName();
 			}
-			if (methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT, INTERFACE_FRIEND_CHAT_USERS_LIST) != null) {
-				for (RSComponent comp : methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT,
-				                                                        INTERFACE_FRIEND_CHAT_USERS_LIST).getComponents()) {
+			if (methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT,
+					INTERFACE_FRIEND_CHAT_USERS_LIST) != null) {
+				for (RSComponent comp : methods.interfaces
+						.getComponent(INTERFACE_FRIEND_CHAT,
+								INTERFACE_FRIEND_CHAT_USERS_LIST)
+						.getComponents()) {
 					if (comp.getText() != null) {
 						tempList.add(comp.getText().trim());
 					} else {
@@ -149,14 +161,15 @@ public class FriendChat extends MethodProvider {
 
 	/**
 	 * Gets the name of the channel.
-	 *
+	 * 
 	 * @return The name of the channel or null if none
 	 */
 	public String getChannelName() {
 		try {
 			methods.game.openTab(Game.TAB_FRIENDS_CHAT);
 			String name = stripFormatting(methods.interfaces.getComponent(
-					INTERFACE_FRIEND_CHAT, INTERFACE_FRIEND_CHAT_CHANNEL_INFO).getText());
+					INTERFACE_FRIEND_CHAT, INTERFACE_FRIEND_CHAT_CHANNEL_INFO)
+					.getText());
 			return name.substring(name.indexOf("Talking in: " + 12));
 		} catch (Exception e) {
 			return null;
@@ -165,7 +178,7 @@ public class FriendChat extends MethodProvider {
 
 	/**
 	 * Gets the owner of the channel.
-	 *
+	 * 
 	 * @return The owner of the channel or null if none
 	 */
 	public String getChannelOwner() {
@@ -175,7 +188,8 @@ public class FriendChat extends MethodProvider {
 				lastCachedChannel = getChannelName();
 			}
 			String name = stripFormatting(methods.interfaces.getComponent(
-					INTERFACE_FRIEND_CHAT, INTERFACE_FRIEND_CHAT_CHANNEL_INFO).getText());
+					INTERFACE_FRIEND_CHAT, INTERFACE_FRIEND_CHAT_CHANNEL_INFO)
+					.getText());
 			return name.substring(name.indexOf("Owner: ") + 7);
 		} catch (Exception e) {
 			return null;
@@ -187,9 +201,41 @@ public class FriendChat extends MethodProvider {
 	}
 
 	/**
+	 * Toggles the LootShare option on or off. You have to make sure the player
+	 * is in a LootShare world and is already part of a Friend Chat before using
+	 * it.
+	 * 
+	 * @param set
+	 *            True for turning it on, false for off.
+	 * @return True if the option was successfully turned on or off according to
+	 *         the parameter given.
+	 */
+	public boolean toogleLootShare(boolean set) {
+		methods.game.openTab(Game.TAB_FRIENDS_CHAT);
+		if (set) {
+			if (methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT,
+					INTERFACE_TOOGLE_LOOTSHARE).getBackgroundColor() != 1071) {
+				methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT,
+						INTERFACE_TOOGLE_LOOTSHARE).doClick();
+			}
+		} else {
+			if (methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT,
+					INTERFACE_TOOGLE_LOOTSHARE).getBackgroundColor() != 1070) {
+				methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT,
+						INTERFACE_TOOGLE_LOOTSHARE).doClick();
+			}
+		}
+		return set ? methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT,
+				INTERFACE_TOOGLE_LOOTSHARE).getBackgroundColor() == 1071
+				: methods.interfaces.getComponent(INTERFACE_FRIEND_CHAT,
+						INTERFACE_TOOGLE_LOOTSHARE).getBackgroundColor() == 1070;
+	}
+
+	/**
 	 * Strips HTML tags.
-	 *
-	 * @param input The string you want to parse.
+	 * 
+	 * @param input
+	 *            The string you want to parse.
 	 * @return The parsed {@code String}.
 	 */
 	private String stripFormatting(String input) {
